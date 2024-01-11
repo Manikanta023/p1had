@@ -1,0 +1,135 @@
+MainActivity.java
+package com.example.music_player406;
+import androidx.appcompat.app.AppCompatActivity;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+ MediaPlayer mediaPlayer;
+ int forwardTime = 5000;
+ int backwardTime = 5000;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ mediaPlayer = MediaPlayer.create(this, R.raw.song);
+ TextView songTitle = findViewById(R.id.songname);
+ songTitle.setText("Music Player");
+ Button play = findViewById(R.id.play);
+ play.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ Toast.makeText(getApplicationContext(), "Playing Song",
+Toast.LENGTH_LONG).show();
+ mediaPlayer.start();
+ }
+ });
+ Button pause = findViewById(R.id.pause);
+ pause.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ Toast.makeText(getApplicationContext(), "Pausing Song",
+Toast.LENGTH_LONG).show();
+ mediaPlayer.pause();
+ }
+ });
+ Button forward = findViewById(R.id.forward);
+ forward.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ int currentPos = mediaPlayer.getCurrentPosition();
+ if ((currentPos + forwardTime) <= mediaPlayer.getDuration()) {
+ mediaPlayer.seekTo(currentPos + forwardTime);
+ }
+ }
+ });
+ Button rewind = findViewById(R.id.rewind);
+ rewind.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ int currentPos = mediaPlayer.getCurrentPosition();
+ if ((currentPos - backwardTime) >= 0) {
+ mediaPlayer.seekTo(currentPos - backwardTime);
+ }
+ }
+ });
+ Button stop = findViewById(R.id.stop);
+ stop.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ Toast.makeText(getApplicationContext(), "Stopping Song",
+Toast.LENGTH_LONG).show();
+ mediaPlayer.stop();
+ mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song);
+ }
+ });
+ Button restart = findViewById(R.id.restart);
+ restart.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ Toast.makeText(getApplicationContext(), "Restarting Song",
+Toast.LENGTH_LONG).show();
+ mediaPlayer.seekTo(0);
+ mediaPlayer.start();
+ }
+ });
+ }
+}
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ tools:context=".MainActivity">
+ <TextView
+ android:id="@+id/songname"
+ android:layout_width="match_parent"
+ android:layout_height="215dp"
+ android:fontFamily="casual"
+ android:text="Media Player"
+ android:textAlignment="center"
+ android:textAppearance="?android:attr/textAppearanceLarge"
+ android:textSize="34sp" />
+ <Button
+ android:id="@+id/play"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="PLAY"
+ app:icon="@android:drawable/ic_media_play" />
+ <Button
+ android:id="@+id/pause"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="PAUSE"
+ app:icon="@android:drawable/ic_media_pause" />
+ <Button
+ android:id="@+id/forward"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="FORWARD"
+ app:icon="@android:drawable/ic_media_ff" />
+ <Button
+ android:id="@+id/rewind"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="REWIND"
+ app:icon="@android:drawable/ic_media_rew" />
+ <Button
+ android:id="@+id/stop"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="STOP"
+ app:icon="@android:drawable/ic_media_pause" />
+ <Button
+ android:id="@+id/restart"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="RESTART"
+ app:icon="@android:drawable/ic_menu_rotate" />
+</LinearLayout>

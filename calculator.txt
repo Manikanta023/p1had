@@ -1,0 +1,112 @@
+MainActivity.java
+package com.example.a1nt21is406;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+public class MainActivity extends AppCompatActivity {
+ boolean isNewOp = true;
+ EditText ed1;
+ String op;
+ String oldNumber;
+ String newNumber;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ ed1=findViewById(R.id.editText);
+ }
+ public void numberEvent(View view){
+ if (isNewOp)
+ {
+ ed1.setText("");
+ }
+ isNewOp=false;
+ String number = ed1.getText().toString();
+ switch(view.getId()){
+ case R.id.but12:
+ number +="1";
+ break;
+ case R.id.but13:
+ number +="2";
+ break;
+ case R.id.but14:
+ number +="3";
+ break;
+ case R.id.but8:
+ number +="4";
+ break;
+ case R.id.but9:
+ number +="5";
+ break;
+ case R.id.but10:
+ number +="6";
+ break;
+ case R.id.but4:
+ number +="7";
+ break;
+ case R.id.but5:
+ number +="8";
+ break;
+ case R.id.but6:
+ number +="9";
+ break;
+ case R.id.but16:
+ number +="0";
+ break;
+ case R.id.but17:
+ number +=".";
+ break;
+ case R.id.but1:
+ number +="-"+number;
+ break;
+ }
+ ed1.setText(number);
+ }
+ public void operatorEvent(View view) {
+ isNewOp=true;
+ oldNumber = ed1.getText().toString();
+ switch(view.getId()) {
+ case R.id.but2:
+ op = "/";
+ break;
+ case R.id.but3:
+ op = "*";
+ break;
+ case R.id.but11:
+ op = "+";
+ break;
+ case R.id.but15:
+ op = "-";
+ break;
+ }
+ }
+ public void equalEvent(View view) {
+ newNumber = ed1.getText().toString();
+ Double result =0.0;
+ switch(op){
+ case "+":
+ result = Double.parseDouble(oldNumber) + Double.parseDouble(newNumber);
+ break;
+ case "-":
+ result = Double.parseDouble(oldNumber) - Double.parseDouble(newNumber);
+ break;
+ case "*":
+ result = Double.parseDouble(oldNumber) * Double.parseDouble(newNumber);
+ break;
+ case "/":
+ result = Double.parseDouble(oldNumber) / Double.parseDouble(newNumber);
+ break;
+ }
+ ed1.setText(result+"");
+ }
+ public void acEvent(View view){
+ ed1.setText("0");
+ isNewOp=true;
+ }
+ public void percentEvent(View view){
+ Double no = Double.parseDouble(ed1.getText().toString())/100;
+ ed1.setText(no+"");
+ isNewOp=true;
+ }
+}
